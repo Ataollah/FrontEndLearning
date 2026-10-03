@@ -1,4 +1,4 @@
-## Typography in Tailwind CSS
+# Typography in Tailwind CSS
 
 Tailwind provides utility classes for controlling font size, weight, and line height. Here's a comprehensive breakdown:
 
@@ -24,18 +24,38 @@ Tailwind uses a **modular scale** for font sizes with predefined classes:
 ```
 
 ### Custom Font Sizes
-```js
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      fontSize: {
-        'xxs': '0.625rem',
-        'huge': '5rem',
-      }
-    }
-  }
+
+Define custom sizes in CSS using the `@theme` directive:
+
+```css
+/* app.css */
+@import "tailwindcss";
+
+@theme {
+  --text-xxs: 0.625rem;
+  --text-huge: 5rem;
 }
+```
+
+```html
+<p class="text-xxs">Custom extra small</p>
+<p class="text-huge">Custom huge text</p>
+```
+
+### Binding Line Height and Weight to a Size
+
+Use sub-properties (double dash `--`) to bind a line height and font weight directly to a size:
+
+```css
+@theme {
+  --text-heading: 2.5rem;
+  --text-heading--line-height: 1.2;
+  --text-heading--font-weight: 700;
+}
+```
+
+```html
+<h1 class="text-heading">Heading with preset line-height and weight</h1>
 ```
 
 ## 2. **Font Weight**
@@ -56,18 +76,18 @@ Control text thickness with font weight utilities:
 ```
 
 ### Custom Font Weights
-```js
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      fontWeight: {
-        'extraheavy': '950',
-      }
-    }
-  }
+
+```css
+@theme {
+  --font-weight-extraheavy: 950;
 }
 ```
+
+```html
+<p class="font-extraheavy">Weight 950</p>
+```
+
+> Arbitrary values like `font-[1100]` and CSS variable syntax like `font-(weight:--my-weight)` are also supported.
 
 ## 3. **Line Height**
 
@@ -91,18 +111,17 @@ Also called **leading**, controls vertical spacing between lines:
 ```
 
 ### Custom Line Heights
-```js
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      lineHeight: {
-        'extra-loose': '2.5',
-        '12': '3rem',
-      }
-    }
-  }
+
+```css
+@theme {
+  --leading-extra-loose: 2.5;
+  --leading-12: 3rem;
 }
+```
+
+```html
+<p class="leading-extra-loose">Extra loose spacing</p>
+<p class="leading-12">3rem line height</p>
 ```
 
 ## Combining All Three
@@ -138,14 +157,16 @@ Apply different styles at different breakpoints:
 ## Best Practices
 
 ### 1. **Readable Body Text**
+
 ```html
 <p class="text-base font-normal leading-relaxed">
-  Long-form content should use base size, normal weight, 
-  and relaxed line height for optimal readability.
+  Long-form content should use base size, normal weight, and relaxed line height
+  for optimal readability.
 </p>
 ```
 
 ### 2. **Heading Hierarchy**
+
 ```html
 <h1 class="text-4xl font-bold leading-tight">Main Title</h1>
 <h2 class="text-3xl font-semibold leading-snug">Section</h2>
@@ -153,11 +174,13 @@ Apply different styles at different breakpoints:
 ```
 
 ### 3. **Line Height Guidelines**
+
 - **Headings**: Use tighter line heights (`leading-tight`, `leading-snug`)
 - **Body text**: Use `leading-normal` or `leading-relaxed`
 - **Small text**: Consider `leading-relaxed` for readability
 
 ### 4. **Font Weight for Hierarchy**
+
 ```html
 <!-- Good hierarchy -->
 <div>
@@ -168,6 +191,7 @@ Apply different styles at different breakpoints:
 ```
 
 ### 5. **Accessibility Considerations**
+
 ```html
 <!-- Ensure sufficient contrast and readable sizes -->
 <p class="text-base md:text-lg font-normal leading-relaxed text-gray-700">
@@ -178,11 +202,10 @@ Apply different styles at different breakpoints:
 ## Common Patterns
 
 ### Card Component
+
 ```html
 <div class="p-6">
-  <h3 class="text-xl font-semibold leading-tight mb-2">
-    Card Title
-  </h3>
+  <h3 class="text-xl font-semibold leading-tight mb-2">Card Title</h3>
   <p class="text-sm font-normal leading-relaxed text-gray-600">
     Card description with comfortable reading line height.
   </p>
@@ -190,13 +213,13 @@ Apply different styles at different breakpoints:
 ```
 
 ### Button Text
+
 ```html
-<button class="text-sm font-medium leading-none px-4 py-2">
-  Click Me
-</button>
+<button class="text-sm font-medium leading-none px-4 py-2">Click Me</button>
 ```
 
 ### Article Layout
+
 ```html
 <article class="prose">
   <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-4">
@@ -209,6 +232,33 @@ Apply different styles at different breakpoints:
     Body content with standard sizing and comfortable line height.
   </p>
 </article>
+```
+
+## Full Theme Configuration Example
+
+All custom typography tokens collected into one CSS file:
+
+```css
+/* app.css */
+@import "tailwindcss";
+
+@theme {
+  /* Custom font sizes */
+  --text-xxs: 0.625rem;
+  --text-huge: 5rem;
+
+  /* Custom font size with bound line height + weight */
+  --text-heading: 2.5rem;
+  --text-heading--line-height: 1.2;
+  --text-heading--font-weight: 700;
+
+  /* Custom font weights */
+  --font-weight-extraheavy: 950;
+
+  /* Custom line heights */
+  --leading-extra-loose: 2.5;
+  --leading-12: 3rem;
+}
 ```
 
 These three properties work together to create **visual hierarchy**, **readability**, and **aesthetic balance** in your typography system.
